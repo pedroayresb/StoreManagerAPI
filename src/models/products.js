@@ -21,7 +21,12 @@ const create = async (name) => {
     'INSERT INTO StoreManager.products (name) VALUES (?)',
     [name],
   );
-  return product;
+  const { insertId } = product;
+  const [[newProduct]] = await connection.execute(
+    'SELECT * FROM StoreManager.products WHERE id=?',
+    [insertId],
+  );
+  return newProduct;
 };
 
 module.exports = {
