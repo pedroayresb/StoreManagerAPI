@@ -28,7 +28,7 @@ const validateSaleProduct = async (req, res, next) => {
 
   const hasProduct = body.some((sale) => !allProds.some((prod) => prod.id === sale.productId));
   if (hasProduct) {
-    return res.status(400).json({ type: true, message: 'Product not found' });
+    return res.status(404).json({ type: true, message: 'Product not found' });
   }
 
   next();
