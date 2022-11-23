@@ -1,3 +1,5 @@
+const productsModel = require('../models/products');
+
 const productValidate = (req, res, next) => {
   const { name } = req.body;
 
@@ -14,4 +16,15 @@ const productValidate = (req, res, next) => {
   next();
 };
 
-module.exports = productValidate;
+const deleteProductValidate = async (req, res, next) => {
+  const { id } = req.params;
+  const product = await productsModel.getById(id);
+
+  if (product.length === 0) {
+    return res.status(404).json({ type: true, message: 'Product not found' });
+  }
+
+  next();
+};
+
+module.exports = { productValidate, deleteProductValidate };

@@ -22,9 +22,15 @@ const update = async (id, name) => {
   return { type: null, message: product };
 };
 
+const exclude = async (id) => {
+  await productsModel.exclude(id);
+  return { type: null };
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
+  exclude,
 };
