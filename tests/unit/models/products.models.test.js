@@ -1,37 +1,36 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const productsModel = require('../../../src/models/products');
+const productsService = require('../../../src/services/products');
 
 const connection = require('../../../src/models/connection');
-const products = require('../mocks/products');
+const { products, individualProduct} = require('../mocks/products');
 
 describe('Testa model de produtos', () => {
   afterEach(() => sinon.restore());
 
   describe('Testa o método getAll', () => {
     it('Retorna um array de produtos', async () => {
-      const stub = sinon.stub(connection, 'execute').resolves([products.products]);
-      const response = await productsModel.getAll();
-      expect(response).to.be.an('array');
-      expect(response).to.deep.equal(products.products);
-      expect(stub).to.have.been.calledOnce;
+      sinon.stub(connection, 'execute').resolves([products]);
+      const result = await productsModel.getAll();
+      expect(result).to.be.an('array');
+      expect(result).to.deep.equal(products);
     });
   });
 
   describe('Testa o método getById', () => {
     it('Retorna um produto específico', async () => {
-      const stub = sinon.stub(connection, 'execute').resolves([[products.products[0]]]);
-      const response = await productsModel.getById(1);
-      expect(response).to.be.an('object');
-      expect(response).to.deep.equal(products.products[0]);
-      expect(stub).to.have.been.calledOnce;
+    sinon.stub(productsModel, 'getById').resolves(individualProduct);
+    const result = await productsService.getById(1);
+    expect(result.message).to.deep.equal(individualProduct);
     });
+  });
 
-    it('Retorna um erro quando o produto não existe', async () => {
-      const stub = sinon.stub(connection, 'execute').resolves([[]]);
-      const response = await productsModel.getById(1);
-      expect(response).to.be.an('undefined');
-      expect(stub).to.have.been.calledOnce;
+  describe('Testa o método create', () => {
+    it('Retorna um produto específico', async () => {
+      sinon.stub(productsModel, 'create').resolves(individualProduct);
+      const result = await productsService.create('Martelo de Thor');
+      expect(result.message).to.deep.equal(individualProduct);
     });
   });
 });

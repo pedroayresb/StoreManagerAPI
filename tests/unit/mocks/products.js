@@ -13,6 +13,11 @@ const products = [
   }
 ]
 
+const individualProduct = {
+  "id": 1,
+  "name": "Martelo de Thor"
+}
+
 const productsAll = {
   type: null,
   message: [
@@ -28,6 +33,7 @@ const msgError = { type: 'NOT_FOUND', message: 'Product not found' }
 
 module.exports = {
   products,
+  individualProduct,
   productsAll,
   productsIdForService,
   msgError,
