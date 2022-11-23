@@ -20,19 +20,15 @@ const validateSaleQuantity = async (req, res, next) => {
 const validateSaleProduct = async (req, res, next) => {
   const { body } = req;
   const allProds = await productsModel.getAll();
-  const hasInvalidProduct = body.every((sale) => {
-  const produc = allProds.find((prod) => prod.id === sale.productId);
-    if (!produc) return false;
-    return true;
-  });
-  
-  if (!hasInvalidProduct) {
-    return res.status(404).json({ type: true, message: '"productId" not found' });
-  }
 
   const hasProductID = body.every((sale) => !sale.productId);
   if (hasProductID) {
     return res.status(400).json({ type: true, message: '"productId" is required' });
+  }
+
+  const hasProduct = body.some((sale) => !allProds.some((prod) => prod.id === sale.productId));
+  if (hasProduct) {
+    return res.status(400).json({ type: true, message: 'Product not found' });
   }
 
   next();
