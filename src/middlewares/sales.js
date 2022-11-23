@@ -1,33 +1,42 @@
 const productsModel = require('../models/products');
 
-const validateSaleQuantity = (req, res, next) => {
-  req.body.forEach((element) => {
-    const { quantity } = element;
-    if (!quantity) {
-      return res.status(400).json({ type: true, message: '"quantity" is required' });
-    }
-    if (quantity < 1) {
-      return res.status(422)
-        .json({ type: true, message: '"quantity" must be greater than or equal to 1' });
-    }
-  });
+const validateSaleQuantity = async (req, res, next) => {
+  const { body } = req;
+  const hasQuantity = body.some((sale) => Number(sale.quantity) <= 0);
+  if (hasQuantity) {
+    return res
+      .status(422)
+      .json({ type: true, message: '"quantity" must be larger than or equal to 1' });
+  }
+
+  const hasQuantityID = body.every((sale) => !sale.quantity);
+  if (hasQuantityID) {
+    return res.status(400).json({ type: true, message: '"quantity" is required' });
+  }
+
   next();
 };
 
 const validateSaleProduct = async (req, res, next) => {
-  req.body.forEach(async (element) => {
-    const { productId } = element;
-    if (!productId) {
-      return res.status(400).json({ type: true, message: '"productId" is required' });
-    }
-    const products = productsModel.getAll();
-    const product = products.find((prod) => prod.id === productId);
-    if (!product) {
-      return res.status(422).json({ type: true, message: 'Product not found' });
-    }
+  const { body } = req;
+  const allProds = await productsModel.getAll();
+  const hasInvalidProduct = body.every((sale) => {
+  const produc = allProds.find((prod) => prod.id === sale.productId);
+    if (!produc) return false;
+    return true;
   });
+  
+  if (!hasInvalidProduct) {
+    return res.status(422).json({ type: true, message: '"productId" not found' });
+  }
+
+  const hasProductID = body.every((sale) => !sale.productId);
+  if (hasProductID) {
+    return res.status(400).json({ type: true, message: '"productId" is required' });
+  }
+
   next();
-};
+ };
 
 module.exports = {
   validateSaleQuantity,
