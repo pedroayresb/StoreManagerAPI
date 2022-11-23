@@ -5,6 +5,18 @@ const makeSale = async (saleArray) => {
   return { type: null, message };
 };
 
+const getAllSales = async () => {
+  const message = await salesModel.getAllSales();
+  return { type: null, message };
+};
+
+const getSaleById = async (id) => {
+  const message = await salesModel.getSaleById(id);
+  return { type: null, message };
+};
+
 module.exports = {
   makeSale,
+  getAllSales,
+  getSaleById,
 };

@@ -21,6 +21,24 @@ const makeSale = async (saleArray) => {
   return message;
 };
 
+const getAllSales = async () => {
+  const [sales] = await connection.execute(
+    'SELECT * FROM StoreManager.sales ORDER BY saleId, productId DESC ',
+    [],
+  );
+  return sales;
+};
+
+const getSaleById = async (id) => {
+  const [sales] = await connection.execute(
+    'SELECT * FROM StoreManager.sales WHERE id = ?',
+    [id],
+  );
+  return sales;
+};
+
 module.exports = {
   makeSale,
+  getAllSales,
+  getSaleById,
 };
