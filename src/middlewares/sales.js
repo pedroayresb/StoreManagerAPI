@@ -6,7 +6,7 @@ const validateSaleQuantity = async (req, res, next) => {
   if (hasQuantity) {
     return res
       .status(422)
-      .json({ type: true, message: '"quantity" must be larger than or equal to 1' });
+      .json({ type: true, message: '"quantity" must be greater than or equal to 1' });
   }
 
   const hasQuantityID = body.every((sale) => !sale.quantity);
@@ -27,7 +27,7 @@ const validateSaleProduct = async (req, res, next) => {
   });
   
   if (!hasInvalidProduct) {
-    return res.status(422).json({ type: true, message: '"productId" not found' });
+    return res.status(404).json({ type: true, message: '"productId" not found' });
   }
 
   const hasProductID = body.every((sale) => !sale.productId);
