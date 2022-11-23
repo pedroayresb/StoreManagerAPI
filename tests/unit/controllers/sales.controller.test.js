@@ -33,7 +33,7 @@ describe('Testa controller de vendas', () => {
 
   describe('Testa o método getAllSales', () => {
     it('Retorna um array de vendas', async () => {
-      sinon.stub(salesController, 'getAllSales').resolves(sale.allSales);
+      sinon.stub(connection, 'execute').resolves([sale.allSales]);
       const { body, status } = await chai.request(app).get('/sales');
       expect(body).to.deep.equal(sale.allSales);
       expect(status).to.deep.equal(200);
@@ -42,15 +42,20 @@ describe('Testa controller de vendas', () => {
 
   describe('Testa o método getSaleById', () => {
     it('Retorna uma venda', async () => {
-      sinon.stub(salesController, 'getSaleById').resolves(sale.allSales);
+      sinon.stub(salesController, 'getSaleById').resolves([
+        { date: '2022-11-22T22:09:26.000Z', productId: 1, quantity: 5 },
+        { date: '2022-11-22T22:09:26.000Z', productId: 2, quantity: 10 }
+      ]);;
       const { body, status } = await chai.request(app).get('/sales/1');
-      expect(body).to.deep.equal(sale.saleReturn);
+      expect(body).to.deep.equal([
+        { date: '2022-11-22T22:09:26.000Z', productId: 1, quantity: 5 },
+        { date: '2022-11-22T22:09:26.000Z', productId: 2, quantity: 10 }
+      ]);
       expect(status).to.deep.equal(200);
     });
     it('Retorna um erro 404 quando a venda não existe', async () => {
-      sinon.stub(salesController, 'getSaleById').resolves([sale.allSales[0]]);
-      const { body, status } = await chai.request(app).get('/sales/2');
-      console.log(body);
+      sinon.stub(connection, 'execute').resolves([sale.allSales]);
+      const { body, status } = await chai.request(app).get('/sales/574836216540376');
       expect(body.message).to.deep.equal('Sale not found');
       expect(status).to.deep.equal(404);
     });

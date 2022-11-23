@@ -54,5 +54,27 @@ describe('Testa controller de produtos', () => {
       expect(status).to.deep.equal(400);
     });
   });
+
+  describe('Testa o método updateProduct', () => {
+    it('Retorna um produto específico', async () => {
+      sinon.stub(productsController, 'updateProduct').resolves(products.individualProduct);
+      const { body, status } = await chai.request(app).put('/products/1').send({ name: 'Martelo de Thor' });
+      expect(body.name).to.deep.equal(products.individualProduct.name);
+      expect(status).to.deep.equal(200);
+    });
+
+    it('Retorna um erro 400 quando o produto não é enviado', async () => {
+      const { body, status } = await chai.request(app).put('/products/1').send({});
+      expect(body.message).to.deep.equal('"name" is required');
+      expect(status).to.deep.equal(400);
+    });
+
+    it('Retorna um erro 404 quando o produto não existe', async () => {
+      sinon.stub(productsController, 'updateProduct').resolves(products.error);
+      const { body, status } = await chai.request(app).put('/products/7657564').send({ name: 'Martelo de Thor' });
+      expect(body.message).to.deep.equal('Product not found');
+      expect(status).to.deep.equal(404);
+    });
+  });
 });
 

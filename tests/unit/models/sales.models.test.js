@@ -33,9 +33,9 @@ describe('Testa model de vendas', () => {
       expect(result).to.deep.equal(allSales[0]);
     });
     it('Retorna um erro 404 quando a venda não existe', async () => {
-      sinon.stub(salesModel, 'getSaleById').resolves([]);
+      sinon.stub(connection, 'execute').resolves([]);
       const result = await salesService.getSaleById(2);
-      expect(result.message).to.deep.equal('Sale not found');
+      expect(result).to.deep.equal(undefined);
     });
   });
 });

@@ -41,4 +41,20 @@ describe('Testa service de produtos', () => {
       expect(response.message).to.deep.equal({ id: 1, name: 'Produto 1' });
     });
   });
+
+  describe('Testa o método update', () => {
+    it('Retorna um produto específico', async () => {
+      sinon.stub(productsModel, 'update').resolves({ id: 1, name: 'Produto 1' });
+      const response = await productsService.update(1, 'Produto 1');
+      expect(response.message).to.be.an('object');
+      expect(response.message).to.deep.equal({ id: 1, name: 'Produto 1' });
+    });
+
+    it('Retorna um erro quando o produto não existe', async () => {
+      sinon.stub(productsModel, 'update').resolves(null);
+      const response = await productsService.update(1, 'Produto 1');
+      expect(response).to.be.an('object');
+      expect(response).to.deep.equal({ type: 'notFound', message: 'Product not found' });
+    });
+  });
 });

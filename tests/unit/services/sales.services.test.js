@@ -20,7 +20,7 @@ describe('Testa service de vendas', () => {
     it('Retorna um array de vendas', async () => {
       sinon.stub(salesModel, 'getAllSales').resolves(allSales);
       const result = await salesService.getAllSales();
-      expect(result).to.deep.equal(saleReturn);
+      expect(result).to.deep.equal(allSales);
     });
   });
 
@@ -33,7 +33,7 @@ describe('Testa service de vendas', () => {
     it('Retorna um erro 404 quando a venda não existe', async () => {
       sinon.stub(salesModel, 'getSaleById').resolves([]);
       const result = await salesService.getSaleById(2);
-      expect(result.message).to.deep.equal('Sale not found');
+      expect(result).to.deep.equal([]);
     });
   });    
 });

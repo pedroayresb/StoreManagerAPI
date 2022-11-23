@@ -33,4 +33,12 @@ describe('Testa model de produtos', () => {
       expect(result.message).to.deep.equal(individualProduct);
     });
   });
+
+  describe('Testa o método update', () => {
+    it('Retorna um produto específico', async () => {
+      sinon.stub(productsModel, 'update').resolves(individualProduct);
+      const result = await productsService.update(1, 'Martelo de Thor');
+      expect(result.message).to.deep.equal(individualProduct);
+    });
+  });
 });
