@@ -20,7 +20,7 @@ const deleteProductValidate = async (req, res, next) => {
   const { id } = req.params;
   const product = await productsModel.getById(id);
 
-  if (product.length === 0) {
+  if (!product) {
     return res.status(404).json({ type: true, message: 'Product not found' });
   }
 
