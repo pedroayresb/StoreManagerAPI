@@ -23,15 +23,33 @@ const makeSale = async (saleArray) => {
 
 const getAllSales = async () => {
   const [sales] = await connection.execute(
-    'SELECT * FROM StoreManager.sales ORDER BY saleId, productId DESC ',
-    [],
+    `SELECT
+      sp.sale_id AS saleId,
+      s.date,
+      sp.product_id AS productId,
+      sp.quantity
+    FROM 
+      StoreManager.sales_products AS sp
+    INNER JOIN 
+      StoreManager.sales AS s
+    ON s.id = sale_id
+    ORDER BY sp.sale_id, sp.product_id`,
   );
   return sales;
 };
 
 const getSaleById = async (id) => {
   const [sales] = await connection.execute(
-    'SELECT * FROM StoreManager.sales WHERE id = ?',
+    `SELECT
+      s.date,
+      sp.product_id AS productId,
+      sp.quantity
+    FROM 
+      StoreManager.sales_products AS sp
+    INNER JOIN 
+      StoreManager.sales AS s
+    ON s.id = sale_id
+    WHERE sale_id = ?`,
     [id],
   );
   return sales;

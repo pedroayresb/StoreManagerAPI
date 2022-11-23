@@ -7,12 +7,12 @@ const makeSale = async (saleArray) => {
 
 const getAllSales = async () => {
   const message = await salesModel.getAllSales();
-  return { type: null, message };
+  return message;
 };
 
 const getSaleById = async (id) => {
   const message = await salesModel.getSaleById(id);
-  return { type: null, message };
+  return message;
 };
 
 module.exports = {

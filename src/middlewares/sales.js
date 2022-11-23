@@ -1,4 +1,5 @@
 const productsModel = require('../models/products');
+const salesModel = require('../models/sales');
 
 const validateSaleQuantity = async (req, res, next) => {
   const { body } = req;
@@ -32,9 +33,22 @@ const validateSaleProduct = async (req, res, next) => {
   }
 
   next();
- };
+};
+ 
+const validateSaleId = async (req, res, next) => {
+  const { id } = req.params;
+  const allSales = await salesModel.getAllSales();
+  
+  const hasSale = allSales.some((sale) => Number(sale.saleId) === Number(id));
+  if (!hasSale) {
+    return res.status(404).json({ type: true, message: 'Sale not found' });
+  }
+  
+  next();
+};
 
 module.exports = {
   validateSaleQuantity,
   validateSaleProduct,
+  validateSaleId,
 };
