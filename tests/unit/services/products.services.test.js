@@ -6,7 +6,7 @@ const productsModel = require('../../../src/models/products');
 const products = require('../mocks/products');
 
 describe('Testa service de produtos', () => {
-  afterEach(() => sinon.restore());
+  afterEach(sinon.restore);
 
   describe('Testa o método getAll', () => {
     it('Retorna um array de produtos', async () => {

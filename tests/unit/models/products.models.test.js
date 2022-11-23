@@ -7,7 +7,7 @@ const connection = require('../../../src/models/connection');
 const { products, individualProduct} = require('../mocks/products');
 
 describe('Testa model de produtos', () => {
-  afterEach(() => sinon.restore());
+  afterEach(sinon.restore);
 
   describe('Testa o método getAll', () => {
     it('Retorna um array de produtos', async () => {

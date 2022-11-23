@@ -8,7 +8,7 @@ const connection = require('../../../src/models/connection');
 const { saleArray, saleReturn, allSales } = require('../mocks/sales');
 
 describe('Testa model de vendas', () => {
-  afterEach(() => sinon.restore());
+  afterEach(sinon.restore);
 
   describe('Testa o método makeSale', () => {
     it('Retorna um array de vendas', async () => {

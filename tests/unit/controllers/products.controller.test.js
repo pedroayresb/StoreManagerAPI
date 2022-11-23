@@ -13,7 +13,7 @@ const connection = require('../../../src/models/connection');
 const products = require('../mocks/products');
 
 describe('Testa controller de produtos', () => {
-  afterEach(() => sinon.restore());
+  afterEach(sinon.restore);
 
   describe('Testa o método getProducts', () => {
     it('Retorna um array de produtos', async () => {
@@ -26,7 +26,7 @@ describe('Testa controller de produtos', () => {
 
   describe('Testa o método getProductById', () => {
     it('Retorna um produto específico', async () => {
-      sinon.stub(productsController, 'getProductById').resolves(products.individualProduct);
+      sinon.stub(productsController, 'getProductById').resolves([products.individualProduct]);
       const { body, status } = await chai.request(app).get('/products/1');
       expect(body).to.deep.equal(products.individualProduct);
       expect(status).to.deep.equal(200);
@@ -72,6 +72,21 @@ describe('Testa controller de produtos', () => {
     it('Retorna um erro 404 quando o produto não existe', async () => {
       sinon.stub(productsController, 'updateProduct').resolves(products.error);
       const { body, status } = await chai.request(app).put('/products/7657564').send({ name: 'Martelo de Thor' });
+      expect(body.message).to.deep.equal('Product not found');
+      expect(status).to.deep.equal(404);
+    });
+  });
+
+  describe('Testa o método deleteProduct', () => {
+    it('deleta um produto específico', async () => {
+      sinon.stub(productsController, 'deleteProduct').resolves(products.individualProduct);
+      const { body, status } = await chai.request(app).delete('/products/1');
+      expect(status).to.deep.equal(204);
+    });
+
+    it('Retorna um erro 404 quando o produto não existe', async () => {
+      sinon.stub(productsController, 'deleteProduct').resolves(products.error);
+      const { body, status } = await chai.request(app).delete('/products/7657564');
       expect(body.message).to.deep.equal('Product not found');
       expect(status).to.deep.equal(404);
     });

@@ -13,7 +13,7 @@ const connection = require('../../../src/models/connection');
 const sale = require('../mocks/sales.js');
 
 describe('Testa controller de vendas', () => {
-  afterEach(() => sinon.restore());
+  afterEach(sinon.restore);
 
   describe('Testa o método makeSale', () => {
     it('Retorna um array de vendas', async () => {
@@ -42,15 +42,9 @@ describe('Testa controller de vendas', () => {
 
   describe('Testa o método getSaleById', () => {
     it('Retorna uma venda', async () => {
-      sinon.stub(salesController, 'getSaleById').resolves([
-        { date: '2022-11-22T22:09:26.000Z', productId: 1, quantity: 5 },
-        { date: '2022-11-22T22:09:26.000Z', productId: 2, quantity: 10 }
-      ]);;
+      sinon.stub(connection, 'execute').resolves([sale.saleID]);;
       const { body, status } = await chai.request(app).get('/sales/1');
-      expect(body).to.deep.equal([
-        { date: '2022-11-22T22:09:26.000Z', productId: 1, quantity: 5 },
-        { date: '2022-11-22T22:09:26.000Z', productId: 2, quantity: 10 }
-      ]);
+      expect(body).to.deep.equal(sale.saleID);
       expect(status).to.deep.equal(200);
     });
     it('Retorna um erro 404 quando a venda não existe', async () => {
