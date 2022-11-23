@@ -8,7 +8,6 @@ chai.use(sinonChai);
 const app = require('../../../src/app');
 
 const productsController = require('../../../src/controllers/products');
-const productsService = require('../../../src/services/products');
 
 const connection = require('../../../src/models/connection');
 const products = require('../mocks/products');
