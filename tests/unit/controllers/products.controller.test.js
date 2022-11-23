@@ -16,35 +16,44 @@ const products = require('../mocks/products');
 describe('Testa controller de produtos', () => {
   afterEach(() => sinon.restore());
 
-  describe('Recebe os produtos', async () => { 
+  describe('Testa o método getProducts', () => {
     it('Retorna um array de produtos', async () => {
-      sinon.stub(connection, 'execute').resolves([products.products]);
-      const { body, status } = await chai.request(app).get('/products');
-      expect(status).to.be.equal(200);
-      expect(body).to.be.an('array');
-      expect(body).to.deep.equal(products.products);
+    sinon.stub(connection, 'execute').resolves([products.products]);
+    const { body, status } = await chai.request(app).get('/products');
+    expect(body).to.deep.equal(products.products);
+    expect(status).to.deep.equal(200);
     });
-    it('Recebe produto por id', async () => {
-      sinon.stub(connection, 'execute').resolves(products.products[0]);
+  });
+
+  describe('Testa o método getProductById', () => {
+    it('Retorna um produto específico', async () => {
+      sinon.stub(productsController, 'getProductById').resolves(products.individualProduct);
       const { body, status } = await chai.request(app).get('/products/1');
-      expect(status).to.be.equal(200);
-      expect(body).to.be.an('object');
-      expect(body).to.deep.equal(products.products[0]);
+      expect(body).to.deep.equal(products.individualProduct);
+      expect(status).to.deep.equal(200);
     });
-    it('Recebe erro quando o produto não existe', async () => {
-      sinon.stub(connection, 'execute').resolves({ type: 'notFound', message: 'Product not found' });
-      const { body, status } = await chai.request(app).get('/products/1');
-      expect(status).to.be.equal(404);
-      expect(body).to.be.an('object');
-      expect(body).to.deep.equal({ message: 'Product not found' });
+
+    it('Retorna um erro 404 quando o produto não existe', async () => {
+      sinon.stub(productsController, 'getProductById').resolves(products.error);
+      const { body, status } = await chai.request(app).get('/products/7657564');
+      expect(body.message).to.deep.equal('Product not found');
+      expect(status).to.deep.equal(404);
     });
-    it('Adiciona item a lista', async () => { 
-      sinon.stub(connection, 'execute')
-        .onFirstCall().resolves([{ insertId: 5 }])
-        .onSecondCall().resolves({ type: null, message: products.products[0] });
-      
-      chai.request(app).post('/products').send({ name: 'Martelo de Thor' });
-     });
+  });
+
+  describe('Testa o método createProduct', () => {
+    it('Retorna um produto específico', async () => {
+      sinon.stub(productsController, 'createProduct').resolves(products.individualProduct);
+      const { body, status } = await chai.request(app).post('/products').send({ name: 'Martelo de Thor' });
+      expect(body.name).to.deep.equal(products.individualProduct.name);
+      expect(status).to.deep.equal(201);
+    });
+
+    it('Retorna um erro 400 quando o produto não é enviado', async () => {
+      const { body, status } = await chai.request(app).post('/products').send({});
+      expect(body.message).to.deep.equal('"name" is required');
+      expect(status).to.deep.equal(400);
+    });
   });
 });
 
