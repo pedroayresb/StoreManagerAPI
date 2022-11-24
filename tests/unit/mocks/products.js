@@ -27,6 +27,16 @@ const productsAll = {
   ]
 }
 
+const insertedProduct = {
+  type: null,
+  message: { id: 1, name: 'Teste' }
+}
+
+const updatedProduct = {
+  type: null,
+  message: { id: 1, name: 'Teste2' }
+}
+
 const productsIdForService = { type: null, message: { id: 1, name: 'Martelo de Thor' } }
 
 const msgError = { type: 'NOT_FOUND', message: 'Product not found' }
@@ -37,4 +47,6 @@ module.exports = {
   productsAll,
   productsIdForService,
   msgError,
+  insertedProduct,
+  updatedProduct
 }

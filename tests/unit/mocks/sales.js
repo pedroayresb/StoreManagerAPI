@@ -1,4 +1,5 @@
 const saleReturn = {
+  id: 1,
   itemsSold: [
     {
       productId: 1,
