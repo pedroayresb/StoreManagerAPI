@@ -65,11 +65,6 @@ const deleteSaleById = async (id) => {
 };
 
 const updateSaleById = async (id, saleArray) => {
-  await connection.execute(
-    'UPDATE StoreManager.sales SET date = default WHERE id = ?',
-    [id],
-  );
-  
   saleArray.forEach(async (element) => {
     const { productId, quantity } = element;
     await connection.execute(

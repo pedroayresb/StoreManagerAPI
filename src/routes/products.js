@@ -8,6 +8,7 @@ router
   .get('/:id', productsController.getProductById)
   .post('/', productValidate, productsController.createProduct)
   .put('/:id', productValidate, productsController.updateProduct)
-  .delete('/:id', deleteProductValidate, productsController.deleteProduct);
+  .delete('/:id', deleteProductValidate, productsController.deleteProduct)
+  .get('/search?q=searchTerm', productsController.getProductBySearchTerm);
 
 module.exports = router;

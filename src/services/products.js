@@ -27,10 +27,16 @@ const exclude = async (id) => {
   return { type: null };
 };
 
+const getBySearchTerm = async (q) => {
+  const products = await productsModel.getBySearchTerm(q);
+  return { type: null, message: products };
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   exclude,
+  getBySearchTerm,
 };
