@@ -49,10 +49,19 @@ const exclude = async (id) => {
   return 204;
 };
 
+const getBySearchTerm = async (q) => {
+  const [products] = await connection.execute(
+    'SELECT * FROM StoreManager.products WHERE name LIKE ?',
+    [`%${q}%`],
+  );
+  return products;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   exclude,
+  getBySearchTerm,
 };
