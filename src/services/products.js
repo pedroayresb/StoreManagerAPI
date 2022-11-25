@@ -29,6 +29,7 @@ const exclude = async (id) => {
 
 const getBySearchTerm = async (q) => {
   const products = await productsModel.getBySearchTerm(q);
+  if (!products) return { type: 'notFound', message: 'Products not found' };
   return { type: null, message: products };
 };
 

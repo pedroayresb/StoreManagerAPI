@@ -4,13 +4,19 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3000/products/1",
-    "url": "http://localhost:3000/sales/6",
+    "url": "http://localhost:3000/products/search?q=martelo",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-11-22T20:10:21.491Z",
-    "modified": "2022-11-25T19:28:09.551Z",
+    "modified": "2022-11-25T19:57:16.829Z",
     "headers": [],
-    "params": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "martelo",
+        "isPath": false
+      }
+    ],
     "body": {
       "type": "json",
       "raw": "[\n  {\n    \"productId\": 3,\n    \"quantity\": 6\n  },\n  {\n    \"productId\": 4,\n    \"quantity\": 5\n  }\n]",

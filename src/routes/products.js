@@ -5,10 +5,10 @@ const { productValidate, deleteProductValidate } = require('../middlewares/produ
 
 router
   .get('/', productsController.getProducts)
-  .get('/:id', productsController.getProductById)
+  .get('/search', productsController.getProductBySearchTerm)
   .post('/', productValidate, productsController.createProduct)
+  .get('/:id', productsController.getProductById)
   .put('/:id', productValidate, productsController.updateProduct)
-  .delete('/:id', deleteProductValidate, productsController.deleteProduct)
-  .get('/search', productsController.getProductBySearchTerm);
+  .delete('/:id', deleteProductValidate, productsController.deleteProduct);
 
 module.exports = router;
