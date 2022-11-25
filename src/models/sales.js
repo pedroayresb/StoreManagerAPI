@@ -61,7 +61,7 @@ const deleteSaleById = async (id) => {
     [id],
   );
   await connection.execute('DELETE FROM StoreManager.sales WHERE id = ?', [id]);
-  return { message: 'Sale deleted with success!' };
+  return 204;
 };
 
 const updateSaleById = async (id, saleArray) => {
@@ -90,4 +90,6 @@ module.exports = {
   makeSale,
   getAllSales,
   getSaleById,
+  deleteSaleById,
+  updateSaleById,
 };

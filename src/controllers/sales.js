@@ -18,8 +18,8 @@ const getSaleById = async (req, res) => {
 
 const deleteSaleById = async (req, res) => {
   const { id } = req.params;
-  const message = await salesService.deleteSaleById(id);
-  return res.status(200).json(message);
+  await salesService.deleteSaleById(id);
+  return res.status(204).json();
 };
 
 const updateSaleById = async (req, res) => {

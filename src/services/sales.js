@@ -29,4 +29,6 @@ module.exports = {
   makeSale,
   getAllSales,
   getSaleById,
+  deleteSaleById,
+  updateSaleById,
 };
