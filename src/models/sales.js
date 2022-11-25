@@ -55,6 +55,37 @@ const getSaleById = async (id) => {
   return sales;
 };
 
+const deleteSaleById = async (id) => {
+  await connection.execute(
+    'DELETE FROM StoreManager.sales_products WHERE sale_id = ?',
+    [id],
+  );
+  await connection.execute('DELETE FROM StoreManager.sales WHERE id = ?', [id]);
+  return { message: 'Sale deleted with success!' };
+};
+
+const updateSaleById = async (id, saleArray) => {
+  await connection.execute(
+    'UPDATE StoreManager.sales SET date = default WHERE id = ?',
+    [id],
+  );
+  
+  saleArray.forEach(async (element) => {
+    const { productId, quantity } = element;
+    await connection.execute(
+      'UPDATE StoreManager.sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
+      [quantity, id, productId],
+    );
+  });
+
+  const message = {
+    saleId: id,
+    itemsUpdated: saleArray,
+  };
+
+  return message;
+};
+
 module.exports = {
   makeSale,
   getAllSales,

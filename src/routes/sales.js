@@ -8,6 +8,8 @@ const { validateSaleQuantity,
 router
   .post('/', validateSaleProduct, validateSaleQuantity, salesController.makeSale)
   .get('/', salesController.getAllSales)
-  .get('/:id', validateSaleId, salesController.getSaleById);
+  .get('/:id', validateSaleId, salesController.getSaleById)
+  .delete('/:id', validateSaleId, salesController.deleteSaleById)
+  .put('/:id', validateSaleId, salesController.updateSaleById);
 
 module.exports = router;
