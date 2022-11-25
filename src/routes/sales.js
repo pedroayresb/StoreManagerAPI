@@ -10,6 +10,6 @@ router
   .get('/', salesController.getAllSales)
   .get('/:id', validateSaleId, salesController.getSaleById)
   .delete('/:id', validateSaleId, salesController.deleteSaleById)
-  .put('/:id', validateSaleProduct, validateSaleQuantity, salesController.updateSaleById);
+  .put('/:id', validateSaleProduct, validateSaleId, salesController.updateSaleById);
 
 module.exports = router;
