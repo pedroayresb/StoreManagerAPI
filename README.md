@@ -38,7 +38,7 @@ npm install
 
 ## Uso
 
-A API estará disponível em http://localhost:3000. As rotas e funcionalidades da API podem ser encontradas no arquivo routes/api.js.
+A API estará disponível em http://localhost:3000.
 
 ## Testes
 
