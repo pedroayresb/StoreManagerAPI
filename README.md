@@ -21,7 +21,7 @@ git clone https://github.com/pedroayresb/StoreManagerAPI
 ### Navegue até a pasta do projeto
 
 ```bash
-cd seu-projeto
+cd StoreManagerAPI
 ```
 
 ### Inicie o Docker Compose
@@ -49,13 +49,16 @@ npm run test
 ```
 
 ## Documentação da API
+
 Esta API é responsável por gerenciar produtos, que possuem apenas nome e id.
 
 ### Rotas
+
 #### Listar todos os produtos
+
 Método HTTP: GET
 
-Rota: /products/
+Rota: /products
 
 Exemplo de resposta:
 
@@ -73,6 +76,7 @@ Exemplo de resposta:
 ```
 
 #### Procurar produtos por nome
+
 Método HTTP: GET
 
 Rota: /products/search?name=<nome_do_produto>
@@ -89,9 +93,10 @@ Exemplo de resposta:
 ```
 
 #### Cadastrar um produto
+
 Método HTTP: POST
 
-Rota: /products/
+Rota: /products
 
 Exemplo de requisição:
 
@@ -111,9 +116,10 @@ Exemplo de resposta:
 ```
 
 #### Consultar um produto específico
+
 Método HTTP: GET
 
-Rota: /products/<id_do_produto>
+Rota: /products/:id
 
 Exemplo de resposta:
 
@@ -125,9 +131,10 @@ Exemplo de resposta:
 ```
 
 #### Editar um produto
+
 Método HTTP: PUT
 
-Rota: /products/<id_do_produto>
+Rota: /products/:id
 
 Exemplo de requisição:
 
@@ -147,10 +154,10 @@ Exemplo de resposta:
 ```
 
 #### Deletar um produto
+
 Método HTTP: DELETE
 
-Rota: /products/<id_do_produto>
-
+Rota: /products/:id
 Exemplo de resposta:
 
 ```json
@@ -160,6 +167,7 @@ Exemplo de resposta:
 ```
 
 #### Fazer uma venda
+
 Método HTTP: POST 
 
 Rota: /sales
@@ -198,6 +206,7 @@ Exemplo de resposta:
 ```
 
 #### Consultar todas venda
+
 Método HTTP: GET 
 
 Rota: /sales
@@ -224,6 +233,7 @@ Exemplo de resposta:
 ```
 
 #### Consultar uma venda
+
 Método HTTP: GET 
 
 Rota: '/sales/:id'
@@ -241,6 +251,7 @@ Exemplo de resposta:
 ```
 
 #### Deletar uma venda
+
 Método HTTP: DELETE 
 
 Rota: '/sales/:id'
@@ -248,6 +259,7 @@ Rota: '/sales/:id'
 Retorna um status 204 (No Content).
 
 #### Atualizar uma venda
+
 Método HTTP: PUT 
 
 Rota: '/sales/:id'
