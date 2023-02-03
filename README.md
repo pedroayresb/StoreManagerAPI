@@ -79,7 +79,7 @@ Exemplo de resposta:
 
 Método HTTP: GET
 
-Rota: /products/search?name=<nome_do_produto>
+Rota: /products/search?<nome_do_produto>
 
 Exemplo de resposta:
 
